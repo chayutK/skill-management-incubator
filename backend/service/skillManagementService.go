@@ -153,7 +153,7 @@ func UpdateHandler(ctx *gin.Context) {
 
 	if err != nil {
 		log.Println("Error while getting data", err)
-		ctx.JSON(http.StatusInternalServerError, InternalServerErrorResponse)
+		ctx.JSON(http.StatusBadRequest, UpdateErrorResponse)
 		return
 	}
 
@@ -185,7 +185,10 @@ func UpdateNameHandler(ctx *gin.Context) {
 
 	if err != nil {
 		log.Println("Error while getting data", err)
-		ctx.JSON(http.StatusNotFound, NotFoundErrorResponse)
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"status":  "error",
+			"message": UpdateErrorMessage + "name",
+		})
 		return
 	}
 
@@ -239,7 +242,10 @@ func UpdateDescriptionHandler(ctx *gin.Context) {
 
 	if err != nil {
 		log.Println("Error while getting data", err)
-		ctx.JSON(http.StatusNotFound, NotFoundErrorResponse)
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"status":  "error",
+			"message": UpdateErrorMessage + "description",
+		})
 		return
 	}
 
@@ -251,7 +257,7 @@ func UpdateDescriptionHandler(ctx *gin.Context) {
 
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"status":  "error",
-			"message": UpdateErrorMessage + "Description",
+			"message": UpdateErrorMessage + "description",
 		})
 		return
 	}
@@ -293,7 +299,10 @@ func UpdateLogoHandler(ctx *gin.Context) {
 
 	if err != nil {
 		log.Println("Error while getting data", err)
-		ctx.JSON(http.StatusNotFound, NotFoundErrorResponse)
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"status":  "error",
+			"message": UpdateErrorMessage + "logo",
+		})
 		return
 	}
 
@@ -305,7 +314,7 @@ func UpdateLogoHandler(ctx *gin.Context) {
 
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"status":  "error",
-			"message": UpdateErrorMessage + "name",
+			"message": UpdateErrorMessage + "logo",
 		})
 		return
 	}
@@ -347,7 +356,10 @@ func UpdateTagsHandler(ctx *gin.Context) {
 
 	if err != nil {
 		log.Println("Error while getting data", err)
-		ctx.JSON(http.StatusNotFound, NotFoundErrorResponse)
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"status":  "error",
+			"message": UpdateErrorMessage + "tags",
+		})
 		return
 	}
 
@@ -359,7 +371,7 @@ func UpdateTagsHandler(ctx *gin.Context) {
 
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"status":  "error",
-			"message": UpdateErrorMessage + "name",
+			"message": UpdateErrorMessage + "tags",
 		})
 		return
 	}
@@ -382,8 +394,15 @@ func UpdateTagsHandler(ctx *gin.Context) {
 func DeleteHandler(ctx *gin.Context) {
 	key := ctx.Param("key")
 
+	_, err := getSkillByKey(key)
+	if err != nil {
+		log.Println("Error while getting data", err)
+		ctx.JSON(http.StatusBadRequest, DeleteErrorResponse)
+		return
+	}
+
 	q := "DELETE FROM skill WHERE key=$1"
-	_, err := DB.Exec(q, key)
+	_, err = DB.Exec(q, key)
 
 	if err != nil {
 		log.Println("Error while deleting data", err)
