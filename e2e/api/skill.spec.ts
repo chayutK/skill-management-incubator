@@ -409,25 +409,23 @@ test("should response with updated skill when PATCH /api/v1/skills/{key}/actions
   await request.delete("/api/v1/skills/python13")
 });
 
-// test("should response with error when PATCH /api/v1/skills/{key}/actions/description when key is unavailable", async ({
-// 	request,
-// }) => {
+test("should response with error when PATCH /api/v1/skills/{key}/actions/description when key is unavailable", async ({
+	request,
+}) => {
 
-// 	const updatedReps = await request.patch("/api/v1/skills/python19", {
-// 		data: {
-// 			description:
-// 				"Python 3 is the latest version of Python programming language.",
-// 		},
-// 	});
+	const updatedReps = await request.patch("/api/v1/skills/python19/actions/description", {
+		data: {
+			description:
+				"Python 3 is the latest version of Python programming language.",
+		},
+	});
 
-//   expect(updatedReps.ok()).toBeFalsy()
-// 	const updateResponse = await updatedReps.json();
-// 	expect(updateResponse).toEqual(
-// 		expect.objectContaining({
-// 			status: "error",
-// 			message:"not be able to update skill description"
-// 		})
-// 	);
-
-//   await request.delete("/api/v1/skills/python")
-// });
+  expect(updatedReps.ok()).toBeFalsy()
+	const updateResponse = await updatedReps.json();
+	expect(updateResponse).toEqual(
+		expect.objectContaining({
+			status: "error",
+			message:"not be able to update skill description"
+		})
+	);
+});
