@@ -528,4 +528,24 @@ test("should response with updated skill's tags when PATCH /api/v1/skills/python
   await request.delete("/api/v1/skills/python15")
 })
 
+test("should response with error when PATCH /api/v1/skills/{key}/actions/tags when key is unavailable", async ({
+	request,
+}) => {
+
+	const updatedReps = await request.patch("/api/v1/skills/python19/actions/tags", {
+		data: {
+			tags: ["programming language", "scripting"],
+		},
+	});
+
+  expect(updatedReps.ok()).toBeFalsy()
+	const updateResponse = await updatedReps.json();
+	expect(updateResponse).toEqual(
+		expect.objectContaining({
+			status: "error",
+			message:"not be able to update skill tags"
+		})
+	);
+});
+
 
