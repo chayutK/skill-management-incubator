@@ -469,4 +469,25 @@ test("should response with updated skill's logo when PATCH /api/v1/skills/python
   await request.delete("/api/v1/skills/python14")
 })
 
+test("should response with error when PATCH /api/v1/skills/{key}/actions/logo when key is unavailable", async ({
+	request,
+}) => {
+
+	const updatedReps = await request.patch("/api/v1/skills/python19/actions/logo", {
+		data: {
+			logo:
+				"Python 3 is the latest version of Python programming language.",
+		},
+	});
+
+  expect(updatedReps.ok()).toBeFalsy()
+	const updateResponse = await updatedReps.json();
+	expect(updateResponse).toEqual(
+		expect.objectContaining({
+			status: "error",
+			message:"not be able to update skill logo"
+		})
+	);
+});
+
 
