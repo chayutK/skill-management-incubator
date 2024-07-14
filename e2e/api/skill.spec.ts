@@ -363,14 +363,13 @@ test("should response with error when PATCH /api/v1/skills/{key}/actions/name wh
 
   expect(updatedReps.ok()).toBeFalsy()
 	const updateResponse = await updatedReps.json();
-  console.log(updateResponse);
   
-	// expect(updateResponse).toEqual(
-	// 	expect.objectContaining({
-	// 		status: "error",
-	// 		message:"not be able to update skill name"
-	// 	})
-	// );
+	expect(updateResponse).toEqual(
+		expect.objectContaining({
+			status: "error",
+			message:"not be able to update skill name"
+		})
+	);
 });
 
 // test("should response with updated skill when PATCH /api/v1/skills/{key}/actions/description when key is available", async ({
