@@ -141,13 +141,11 @@ func UpdateHandler(ctx *gin.Context) {
 
 	err = updateSkillByKey(skill)
 
-	// q := "UPDATE skill SET name = $1,description = $2, logo=$3,tags=$4 WHERE key=$5 "
-
-	// _, err = DB.Exec(q, skill.Name, skill.Description, skill.Logo, pq.Array(skill.Tags), key)
-	// if err != nil {
-	// 	log.Println("Error while updating data", err)
-	// 	ctx.JSON(http.StatusInternalServerError, UpdateErrorResponse)
-	// }
+	if err != nil {
+		log.Println("Error while getting data", err)
+		ctx.JSON(http.StatusBadRequest, UpdateErrorResponse)
+		return
+	}
 
 	checkUpdatedSkill, err := getSkillByKey(key)
 
