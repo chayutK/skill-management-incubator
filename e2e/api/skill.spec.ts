@@ -281,7 +281,7 @@ test("should response with updated skill when PUT /api/v1/skills/{key} when key 
 		})
 	);
 
-  await request.delete("/api/v1/skills/python")
+  await request.delete("/api/v1/skills/python10")
 });
 
 test("should response with error when PUT /api/v1/skills/{key} when key is unavailable", async ({
@@ -306,8 +306,6 @@ test("should response with error when PUT /api/v1/skills/{key} when key is unava
 			message:"not be able to update skill"
 		})
 	);
-
-  await request.delete("/api/v1/skills/python")
 });
 
 test("should response with updated skill name when PATCH /api/v1/skills/{key}/actions/nam when key is available", async ({
@@ -346,7 +344,7 @@ test("should response with updated skill name when PATCH /api/v1/skills/{key}/ac
 		})
 	);
 
-  await request.delete("/api/v1/skills/python")
+  await request.delete("/api/v1/skills/python11")
 });
 
 test("should response with error when PATCH /api/v1/skills/{key}/actions/name when key is unavailable", async ({
@@ -408,10 +406,8 @@ test("should response with updated skill when PATCH /api/v1/skills/{key}/actions
 			}),
 		})
 	);
-})
-
-//   await request.delete("/api/v1/skills/python")
-// });
+  await request.delete("/api/v1/skills/python13")
+});
 
 // test("should response with error when PATCH /api/v1/skills/{key}/actions/description when key is unavailable", async ({
 // 	request,
