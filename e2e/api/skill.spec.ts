@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { log } from "console";
 import exp from "constants";
 
 test("should response one skill when request POST /api/v1/skills", async ({
@@ -348,27 +349,29 @@ test("should response with updated skill name when PATCH /api/v1/skills/{key}/ac
   await request.delete("/api/v1/skills/python")
 });
 
-// test("should response with error when PATCH /api/v1/skills/{key}/actions/name when key is unavailable", async ({
-// 	request,
-// }) => {
+test("should response with error when PATCH /api/v1/skills/{key}/actions/name when key is unavailable", async ({
+	request,
+}) => {
 
-// 	const updatedReps = await request.patch("/api/v1/skills/python19", {
-// 		data: {
-// 			name: "Python 3",
-// 		},
-// 	});
+	const updatedReps = await request.patch("/api/v1/skills/python19/actions/name", {
+		data: {
+			name: "Python 3",
+		},
+	});
 
-//   expect(updatedReps.ok()).toBeFalsy()
-// 	const updateResponse = await updatedReps.json();
-// 	expect(updateResponse).toEqual(
-// 		expect.objectContaining({
-// 			status: "error",
-// 			message:"not be able to update skill name"
-// 		})
-// 	);
+  // console.log(updatedReps)
 
-//   await request.delete("/api/v1/skills/python")
-// });
+  expect(updatedReps.ok()).toBeFalsy()
+	const updateResponse = await updatedReps.json();
+  console.log(updateResponse);
+  
+	// expect(updateResponse).toEqual(
+	// 	expect.objectContaining({
+	// 		status: "error",
+	// 		message:"not be able to update skill name"
+	// 	})
+	// );
+});
 
 // test("should response with updated skill when PATCH /api/v1/skills/{key}/actions/description when key is available", async ({
 // 	request,
