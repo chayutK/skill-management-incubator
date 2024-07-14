@@ -372,42 +372,43 @@ test("should response with error when PATCH /api/v1/skills/{key}/actions/name wh
 	);
 });
 
-// test("should response with updated skill when PATCH /api/v1/skills/{key}/actions/description when key is available", async ({
-// 	request,
-// }) => {
-// 	const reps = await request.post("/api/v1/skills", {
-// 		data: {
-// 			key: "python",
-// 			name: "Python",
-// 			description:
-// 				"Python is an interpreted, high-level, general-purpose programming language.",
-// 			logo: "https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg",
-// 			tags: ["programming language", "scripting"],
-// 		},
-// 	});
-// 	expect(reps.ok).toBeTruthy();
+test("should response with updated skill when PATCH /api/v1/skills/{key}/actions/description when key is available", async ({
+	request,
+}) => {
+	const reps = await request.post("/api/v1/skills", {
+		data: {
+			key: "python13",
+			name: "Python",
+			description:
+				"Python is an interpreted, high-level, general-purpose programming language.",
+			logo: "https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg",
+			tags: ["programming language", "scripting"],
+		},
+	});
+	expect(reps.ok).toBeTruthy();
 
-// 	const updatedReps = await request.put("/api/v1/skills/python/actions/description", {
-// 		data: {
-// 			description:
-// 				"Python 3 is the latest version of Python programming language.",
-// 		},
-// 	});
-//   expect(updatedReps.ok()).toBeTruthy()
-// 	const updateResponse = await updatedReps.json();
-// 	expect(updateResponse).toEqual(
-// 		expect.objectContaining({
-// 			status: "success",
-// 			data: expect.objectContaining({
-// 				Key: "python",
-// 				Name: "Python",
-// 				Description:
-// 					"Python 3 is the latest version of Python programming language.",
-// 				Logo: "https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg",
-// 				Tags: ["programming language", "scripting"],
-// 			}),
-// 		})
-// 	);
+	const updatedReps = await request.patch("/api/v1/skills/python13/actions/description", {
+		data: {
+			description:
+				"Python 3 is the latest version of Python programming language.",
+		},
+	});
+  expect(updatedReps.ok()).toBeTruthy()
+	const updateResponse = await updatedReps.json();
+	expect(updateResponse).toEqual(
+		expect.objectContaining({
+			status: "success",
+			data: expect.objectContaining({
+				Key: "python13",
+				Name: "Python",
+				Description:
+					"Python 3 is the latest version of Python programming language.",
+				Logo: "https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg",
+				Tags: ["programming language", "scripting"],
+			}),
+		})
+	);
+})
 
 //   await request.delete("/api/v1/skills/python")
 // });
