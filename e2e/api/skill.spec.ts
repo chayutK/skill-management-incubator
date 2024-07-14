@@ -575,4 +575,20 @@ test("should response success when request DELETE /api/v1/skills/{key} when key 
 
 });
 
+test("should response error when request DELETE /api/v1/skills/{key} when key is invalid", async ({
+	request,
+}) => {
+
+	const deleteReps = await request.delete("/api/v1/skills/python17");
+  expect(deleteReps.ok()).toBeFalsy()
+  const deleteResponse = await deleteReps.json()
+  expect(deleteResponse).toEqual(
+    expect.objectContaining({
+      status:"error",
+      message:"not be able to delete skill"
+    })
+  )
+
+});
+
 
