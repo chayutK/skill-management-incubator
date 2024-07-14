@@ -429,3 +429,44 @@ test("should response with error when PATCH /api/v1/skills/{key}/actions/descrip
 		})
 	);
 });
+
+test("should response with updated skill's logo when PATCH /api/v1/skills/python14/actions/logo", async ({
+  request
+}) => {
+  const reps = await request.post("/api/v1/skills", {
+		data: {
+			key: "python14",
+			name: "Python",
+			description:
+				"Python is an interpreted, high-level, general-purpose programming language.",
+			logo: "https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg",
+			tags: ["programming language", "scripting"],
+		},
+	});
+	expect(reps.ok).toBeTruthy();
+
+	const updatedReps = await request.patch("/api/v1/skills/python14/actions/logo", {
+		data: {
+			logo:
+				"updated logo",
+		},
+	});
+  expect(updatedReps.ok()).toBeTruthy()
+	const updateResponse = await updatedReps.json();
+	expect(updateResponse).toEqual(
+		expect.objectContaining({
+			status: "success",
+			data: expect.objectContaining({
+				Key: "python14",
+				Name: "Python",
+				Description:
+					"Python is an interpreted, high-level, general-purpose programming language.",
+				Logo: "updated logo",
+				Tags: ["programming language", "scripting"],
+			}),
+		})
+	);
+  await request.delete("/api/v1/skills/python14")
+})
+
+
