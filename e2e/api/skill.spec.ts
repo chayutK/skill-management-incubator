@@ -548,4 +548,31 @@ test("should response with error when PATCH /api/v1/skills/{key}/actions/tags wh
 	);
 });
 
+test("should response success when request DELETE /api/v1/skills/{key} when key is valid", async ({
+	request,
+}) => {
+	const reps = await request.post("/api/v1/skills", {
+		data: {
+			key: "python16",
+			name: "Python",
+			description:
+				"Python is an interpreted, high-level, general-purpose programming language.",
+			logo: "https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg",
+			tags: ["programming language", "scripting"],
+		},
+	});
+	expect(reps.ok).toBeTruthy();
+
+	const deleteReps = await request.delete("/api/v1/skills/python16");
+  expect(deleteReps.ok()).toBeTruthy()
+  const deleteResponse = await deleteReps.json()
+  expect(deleteResponse).toEqual(
+    expect.objectContaining({
+      status:"success",
+      message:"Skill deleted"
+    })
+  )
+
+});
+
 

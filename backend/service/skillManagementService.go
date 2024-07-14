@@ -411,7 +411,7 @@ func DeleteHandler(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
-		"status":  "sucesss",
+		"status":  "success",
 		"message": "Skill deleted",
 	})
 
